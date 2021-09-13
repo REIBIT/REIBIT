@@ -1,0 +1,11 @@
+[Protocol]
+exec=reibit-qt '%u'
+protocol=reibit
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

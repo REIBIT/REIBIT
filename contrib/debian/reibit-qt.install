@@ -1,0 +1,6 @@
+usr/local/bin/reibit-qt usr/bin
+share/pixmaps/reibit32.xpm usr/share/pixmaps
+share/pixmaps/reibit16.xpm usr/share/pixmaps
+share/pixmaps/reibit128.png usr/share/pixmaps
+debian/reibit-qt.desktop usr/share/applications
+debian/reibit-qt.protocol usr/share/kde4/services/

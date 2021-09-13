@@ -1,0 +1,157 @@
+
+## <summary>policy for reibit</summary>
+
+
+########################################
+## <summary>
+##	Transition to reibit.
+## </summary>
+## <param name="domain">
+## <summary>
+##	Domain allowed to transition.
+## </summary>
+## </param>
+#
+interface(`reibit_domtrans',`
+	gen_require(`
+		type reibit_t, reibit_exec_t;
+	')
+
+	corecmd_search_bin($1)
+	domtrans_pattern($1, reibit_exec_t, reibit_t)
+')
+
+
+########################################
+## <summary>
+##	Execute reibit server in the reibit domain.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`reibit_initrc_domtrans',`
+	gen_require(`
+		type reibit_initrc_exec_t;
+	')
+
+	init_labeled_script_domtrans($1, reibit_initrc_exec_t)
+')
+
+
+########################################
+## <summary>
+##	Search reibit lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`reibit_search_lib',`
+	gen_require(`
+		type reibit_var_lib_t;
+	')
+
+	allow $1 reibit_var_lib_t:dir search_dir_perms;
+	files_search_var_lib($1)
+')
+
+########################################
+## <summary>
+##	Read reibit lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`reibit_read_lib_files',`
+	gen_require(`
+		type reibit_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	read_files_pattern($1, reibit_var_lib_t, reibit_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage reibit lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`reibit_manage_lib_files',`
+	gen_require(`
+		type reibit_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_files_pattern($1, reibit_var_lib_t, reibit_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage reibit lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`reibit_manage_lib_dirs',`
+	gen_require(`
+		type reibit_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_dirs_pattern($1, reibit_var_lib_t, reibit_var_lib_t)
+')
+
+
+########################################
+## <summary>
+##	All of the rules required to administrate
+##	a reibit environment
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+## <param name="role">
+##	<summary>
+##	Role allowed access.
+##	</summary>
+## </param>
+## <rolecap/>
+#
+interface(`reibit_admin',`
+	gen_require(`
+		type reibit_t;
+		type reibit_initrc_exec_t;
+		type reibit_var_lib_t;
+	')
+
+	allow $1 reibit_t:process { ptrace signal_perms };
+	ps_process_pattern($1, reibit_t)
+
+	reibit_initrc_domtrans($1)
+	domain_system_change_exemption($1)
+	role_transition $2 reibit_initrc_exec_t system_r;
+	allow $2 system_r;
+
+	files_search_var_lib($1)
+	admin_pattern($1, reibit_var_lib_t)
+
+')
+

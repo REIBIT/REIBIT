@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=ReiBit Core
+Comment=ReiBit P2P Cryptocurrency
+Comment[fr]=ReiBit, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=ReiBit, eşten eşe kriptografik sanal para birimi
+Exec=reibit-qt %u
+Terminal=false
+Type=Application
+Icon=reibit128
+MimeType=x-scheme-handler/reibit;
+Categories=Office;Finance;
+StartupWMClass=ReiBit-qt

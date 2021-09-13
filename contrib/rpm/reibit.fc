@@ -1,0 +1,8 @@
+/usr/bin/reibit-cli		--	gen_context(system_u:object_r:reibit_exec_t,s0)
+/usr/sbin/reibitd		--	gen_context(system_u:object_r:reibit_exec_t,s0)
+/usr/lib(64)?/reibit/reibitd		--	gen_context(system_u:object_r:reibit_exec_t,s0)
+
+/etc/reibit(/.*)?		gen_context(system_u:object_r:reibit_conf_t,s0)
+/var/lib/reibit(/.*)?		gen_context(system_u:object_r:reibit_var_lib_t,s0)
+
+(/var)?/run/reibitd(/.*)?   gen_context(system_u:object_r:reibit_var_run_t,s0)
